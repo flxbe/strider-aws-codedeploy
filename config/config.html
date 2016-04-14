@@ -33,8 +33,8 @@
                  ng-class="{ active: config.awsCredentials.mode === 'environment' }">Environment</div>
         </div>
         <p class="help-text">
-            Select the method, that the plugin will use to load your credentials. 'Standard' will try to load
-            credentials using all three methods and uses the first ones available.
+            Select the method, that the plugin will use to load your credentials. 'Standard' will use all
+            three methods and stops as soon as valid credentials are detected.
         </p>
 
         <div class="row-fluid">
@@ -105,7 +105,7 @@
             <input type="checkbox" ng-model="config.quietBuild"> Quiet build
         </label>
         <p class="help-text">
-            Check, to omit the console-output of the zip-task.
+            Check, to omit the console-output during the zip-task.
         </p>
     </div>
 
