@@ -1,0 +1,37 @@
+{
+  "name": "strider-aws-codedeploy",
+  "version": "0.1.0",
+  "description": "Deploy projects via AWS CodeDeploy",
+  "main": "worker.js",
+  "scripts": {
+    "test": "echo 'no tests specified' && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flxbe/strider-aws-codedeploy.git"
+  },
+  "keywords": [
+    "strider",
+    "plugin",
+    "aws",
+    "code-deploy",
+    "deploy",
+    "deployment"
+  ],
+  "author": "Felix Bernhardt",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "aws-sdk": "^2.3.3"
+  },
+  "strider": {
+    "type": "job",
+    "id": "aws_codedeploy",
+    "title": "AWS CodeDeploy",
+    "worker": "worker.js",
+    "webapp": "webapp.js",
+    "config": {
+      "controller": "AWSCodeDeployController"
+    }
+  }
+}

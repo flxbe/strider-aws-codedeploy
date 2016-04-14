@@ -1,0 +1,148 @@
+<div id="aws-codedeploy">
+    <h2>AWS CodeDeploy Configuration</h2>
+
+    <div class="well">
+        <button ng-click="save()" class="btn btn-success">Save Changes</button>
+    </div>
+
+    <div class="well">
+        <h3>Information</h3>
+
+        <p class="help-text">
+            This plugin expects, that you already set up AWS CodeDeploy on your Account. Please visit the
+            <a href="http://docs.aws.amazon.com/codedeploy/latest/userguide"
+               target="_blank">AWS CodeDeploy user guide</a>
+            for further information. Please visit the
+            <a href="https://github.com/flxbe/strider-aws-codedeploy"
+               target="_blank">GitHub repository</a> to report any bugs.
+        </p>
+    </div>
+
+    <div class="well">
+        <h3>Credentials</h3>
+
+        <h4>Mode</h4>
+        <div class="btn-group">
+            <div class="btn" ng-model="config.awsCredentials.mode" btn-radio="'standard'"
+                 ng-class="{ active: config.awsCredentials.mode === 'standard' }">Standard</div>
+            <div class="btn" ng-model="config.awsCredentials.mode" btn-radio="'explicit'"
+                 ng-class="{ active: config.awsCredentials.mode === 'explicit' }">Explicit</div>
+            <div class="btn" ng-model="config.awsCredentials.mode" btn-radio="'shared'"
+                 ng-class="{ active: config.awsCredentials.mode === 'shared' }">Shared</div>
+            <div class="btn" ng-model="config.awsCredentials.mode" btn-radio="'environment'"
+                 ng-class="{ active: config.awsCredentials.mode === 'environment' }">Environment</div>
+        </div>
+        <p class="help-text">
+            Select the method, that the plugin will use to load your credentials. 'Standard' will try to load
+            credentials using all three methods and uses the first ones available.
+        </p>
+
+        <div class="row-fluid">
+            <div class="span4">
+                <h4>Explicit</h4>
+                <input type="text" ng-model="config.awsCredentials.credentials.awsAccessKey"
+                       placeholder="AWS Access Key" />
+                <input type="text" ng-model="config.awsCredentials.credentials.awsSecretKey"
+                       placeholder="AWS Secret Key"/>
+                <p class="help-text">
+                    Set your AWS Access Key and Secret Key to directly save your credentials in the database.
+                </p>
+            </div>
+
+            <div class="span4">
+                <h4>Shared</h4>
+                <input type="text" ng-model="config.awsCredentials.shared"
+                       placeholder="Shared Credentials Profile" />
+                <p class="help-text">
+                    Set the name of one of your configured shared identity profiles. These are usually located in
+                    <code>&#126;/.aws/credentials</code>.
+                </p>
+            </div>
+
+            <div class="span4">
+                <h4>Environment</h4>
+                <input type="text" ng-model="config.awsCredentials.environment"
+                       placeholder="Environment Prefix" />
+                <p class="help-text">
+                    Set the prefix, that will be used to search for your credentials in the execution environment.
+                </p>
+            </div>
+        </div>
+
+        <h4>Requirements</h4>
+        <p class="help-text">
+            The plugin needs valid AWS Credentials with access to the following operations:
+            <ul>
+                <li><code>s3:PutObject</code></li>
+                <li><code>codedeploy:RegisterApplicationRevision</code></li>
+                <li><code>codedeploy:CreateDeployment</code></li>
+            </ul>
+            If you need more detailed information about how to set up such credentials, please visit the
+            <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide"
+               target="_blank">AWS IAM user guide</a>.
+        </p>
+    </div>
+
+    <div class="well">
+        <h3>Artifact Creation</h3>
+
+        <h4>Source Path</h4>
+        <input class="input-block-level" type="text" ng-model="config.sourcePath"
+               placeholder="e.g. bin"/>
+        <p class="help-text">
+            The root-directory, that includes your revision. Use <code>.</code> to include the complete directory.
+        </p>
+
+        <h4>Exclude List</h4>
+        <input class="input-block-level" type="text" ng-model="config.excludeString"
+               placeholder="e.g. node_modules/* .git/* ..."/>
+        <p class="help-text">
+            Specify a space-separated list of directories and files, to exclude them from the deployment.
+        </p>
+
+        <h4>Build Options</h4>
+        <label class="checkbox inline">
+            <input type="checkbox" ng-model="config.quietBuild"> Quiet build
+        </label>
+        <p class="help-text">
+            Check, to omit the console-output of the zip-task.
+        </p>
+    </div>
+
+    <div class="well">
+        <h3>Deployment Configuration</h3>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <h4>Application</h4>
+                <input type="text" ng-model="config.applicationName" placeholder="e.g. API" />
+
+                <h4>Deployment Group</h4>
+                <input type="text" ng-model="config.deploymentGroup" placeholder="e.g. Production" />
+            </div>
+            <div class="span6">
+                <h4>Region</h4>
+                <select ng-model="config.region">
+                    <option value="us-east-1">US East (N. Virginia)</option>
+                    <option value="us-west-1">US West (N. California)	</option>
+                    <option value="us-west-2">US West (Oregon)	</option>
+                    <option value="eu-west-1">EU (Ireland)	</option>
+                    <option value="eu-central-1">EU (Frankfurt)	</option>
+                    <option value="ap-northeast-1">Asia Pacific (Tokyo)	</option>
+                    <option value="ap-northeast-2">Asia Pacific (Seoul)	</option>
+                    <option value="ap-southeast-1">Asia Pacific (Singapore)	</option>
+                    <option value="ap-southeast-2">Asia Pacific (Sydney)	</option>
+                    <option value="sa-east-1">South America (São Paulo)	</option>
+                </select>
+
+                <h4>S3 Bucket</h4>
+                <input type="text" ng-model="config.s3Bucket" placeholder="e.g. my-deployment-bucket" />
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <button ng-click="save()" class="btn btn-success">Save Changes</button>
+    </div>
+
+</div>
