@@ -18,9 +18,9 @@ After the repository is successfully installed, restart your Strider server. You
 ## Configuration
 After the plugin is installed, just navigate to your project and add it to your deployment routine. You can then configure the deployment with CodeDeploy. If you need further information about how to set up the required AWS credentials, please have a look at the 
 [IAM User Guide](http://docs.aws.amazon.com/IAM/latest/UserGuide/).
-![credential-form-img]
-![artifact-form-img]
-![deployment-form-img]
+![Credential Form][credential-form-img]
+![Artifact Form][artifact-form-img]
+![Deployment Form][deployment-form-img]
 
 
 ## Help, Suggestions, Bugs
@@ -28,6 +28,6 @@ In any case, feel free to open a GitHub issue.
 
 
 
-[credential-form-img]: https://github.com/flxbe/strider-aws-codedeploy-images/blob/master/credentials_form.png
-[artifact-form-img]: https://github.com/flxbe/strider-aws-codedeploy-images/blob/master/artifact_form.png
-[deployment-form-img]: https://github.com/flxbe/strider-aws-codedeploy-images/blob/master/deployment_form.png
+[credential-form-img]: https://github.com/flxbe/strider-aws-codedeploy-images/blob/master/credentials_form.png?raw=true
+[artifact-form-img]: https://github.com/flxbe/strider-aws-codedeploy-images/blob/master/artifact_form.png?raw=true
+[deployment-form-img]: https://github.com/flxbe/strider-aws-codedeploy-images/blob/master/deployment_form.png?raw=true
