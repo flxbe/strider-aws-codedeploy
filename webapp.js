@@ -1,5 +1,4 @@
 module.exports = {
-  // mongoose schema, if you need project-specific config
   config: {
 
     // possible aws credentials
