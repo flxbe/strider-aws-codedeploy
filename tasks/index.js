@@ -41,11 +41,9 @@ exports.configure = function(config) {
       });
     }
 
-  }
+  };
 
 };
-
-
 
 
 /**
@@ -72,8 +70,6 @@ function validateConfig(config, context, callback) {
 
   callback();
 }
-
-
 
 
 /**
@@ -128,8 +124,6 @@ function initializeAWS(config, context, callback) {
 }
 
 
-
-
 /**
  * Deploy the revision to AWS
  *
@@ -182,21 +176,19 @@ function deployToAWS(config, context, callback) {
 
     // monitor deployment
     function(deployment, callback) {
-      console.log(deployment);
+      context.log(deployment);
       monitorDeployment(context, codedeploy, deployment, callback);
     },
 
     // evaluate deployment result
     function(deployment, callback) {
-      console.log(deployment);
+      context.log(deployment);
       if(deployment.status === 'Succeeded') callback();
       else callback(deployment.errorInformation);
     }
 
   ], callback);
 }
-
-
 
 
 /**
@@ -211,7 +203,6 @@ function deployToAWS(config, context, callback) {
 function monitorDeployment(context, codedeploy, params, callback) {
 
   const delay = 2000;
-  var timeout = null;
 
   const refresh = function() {
     codedeploy.getDeployment(params, function(err, result) {
@@ -225,24 +216,21 @@ function monitorDeployment(context, codedeploy, params, callback) {
       switch(deploymentInfo.status) {
 
         // restart timeout
-        case 'Created':
-        case 'Queued':
-        case 'InProgress':
-          timeout = setTimeout(refresh, delay);
-          break;
+      case 'Created':
+      case 'Queued':
+      case 'InProgress':
+        setTimeout(refresh, delay);
+        break;
 
         // return result
-        default:
-          return callback(null, deploymentInfo);
-          break;
+      default:
+        return callback(null, deploymentInfo);
       }
     });
   };
 
   refresh();
 }
-
-
 
 
 /**
@@ -254,8 +242,6 @@ function monitorDeployment(context, codedeploy, params, callback) {
 function printDeploymentUpdate(context, deployment) {
   context.comment(`Status: ${deployment.status}`);
 }
-
-
 
 
 /**
@@ -274,12 +260,7 @@ function createArtifact(config, context, callback) {
     function (callback) {
       context.cmd(`mkdir ${config.buildDirectory}`, function () {
         callback();
-      })
-    },
-
-    // copy additional files into repository
-    function (callback) {
-      callback();
+      });
     },
 
     // create the aws artifact
@@ -298,8 +279,6 @@ function createArtifact(config, context, callback) {
 
   ], callback);
 }
-
-
 
 
 /**

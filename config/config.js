@@ -1,11 +1,9 @@
 'use strict';
 
 
-
-
-/*
- * $scope.configs, $scope.branch and $scope.pluginConfig, among others are available from the parent scope
- * */
+/**
+ * Standard plugin controller
+ */
 app.controller('AWSCodeDeployController', ['$scope', function ($scope) {
   $scope.saving = false;
 
