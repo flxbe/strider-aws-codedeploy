@@ -63,7 +63,7 @@ function validateConfig(config, context, callback) {
 
   // fill config with computed properties
   config.buildDirectory = 'aws_build';
-  config.artifactName = `${config.applicationName}_strider_artifact.zip`;
+  config.artifactName = `${config.applicationName}_${config.deploymentGroup}_strider_artifact.zip`;
   config.artifactPath = path.join(config.buildDirectory, config.artifactName);
   config.absArtifactPath = path.join(context.dataDir, config.artifactPath);
 
