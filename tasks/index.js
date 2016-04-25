@@ -31,7 +31,6 @@ exports.configure = function(config) {
 
       async.waterfall([
 
-        // create the aws artifact
         async.apply(createArtifact, config, context),
         async.apply(deployToAWS, config, context)
 
@@ -193,7 +192,7 @@ function deployToAWS(config, context, callback) {
 
 /**
  * Periodically request the deployment status and print it to the strider console.
- * Return, as soon as the jon is finished.
+ * Return as soon as the jon is finished.
  *
  * @param {Object} context
  * @param {Object} codedeploy
@@ -201,9 +200,6 @@ function deployToAWS(config, context, callback) {
  * @param {Function} callback
  */
 function monitorDeployment(context, codedeploy, params, callback) {
-
-  const delay = 2000;
-
   const refresh = function() {
     codedeploy.getDeployment(params, function(err, result) {
       if(err) return callback(err);
@@ -212,17 +208,14 @@ function monitorDeployment(context, codedeploy, params, callback) {
 
       printDeploymentUpdate(context, deploymentInfo);
 
-      // check the status
       switch(deploymentInfo.status) {
-
         // restart timeout
       case 'Created':
       case 'Queued':
       case 'InProgress':
-        setTimeout(refresh, delay);
+        setTimeout(refresh, 2000);
         break;
 
-        // return result
       default:
         return callback(null, deploymentInfo);
       }
@@ -242,7 +235,7 @@ function monitorDeployment(context, codedeploy, params, callback) {
 function printDeploymentUpdate(context, deployment) {
   context.comment(`Status: ${deployment.status}`);
   if(deployment.errorInformation) {
-    context.comment(`Error: ${errorInformation}`);
+    context.comment(`Error: ${deployment.errorInformation.message}`);
   }
 }
 
@@ -261,9 +254,7 @@ function createArtifact(config, context, callback) {
 
     // create build directory
     function (callback) {
-      context.cmd(`mkdir ${config.buildDirectory}`, function () {
-        callback();
-      });
+      context.cmd(`mkdir ${config.buildDirectory}`, () => callback());
     },
 
     // create the aws artifact
@@ -275,9 +266,7 @@ function createArtifact(config, context, callback) {
       if(config.excludeString) command = command + ` ${config.excludeString}`;
       if(config.quietBuild) command = command + ' --quiet';
 
-      context.cmd(command, function () {
-        callback();
-      });
+      context.cmd(command, () => callback());
     }
 
   ], callback);
