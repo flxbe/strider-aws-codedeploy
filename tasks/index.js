@@ -241,6 +241,9 @@ function monitorDeployment(context, codedeploy, params, callback) {
  */
 function printDeploymentUpdate(context, deployment) {
   context.comment(`Status: ${deployment.status}`);
+  if(deployment.errorInformation) {
+    context.comment(`Error: ${errorInformation}`);
+  }
 }
 
 
