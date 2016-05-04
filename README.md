@@ -5,6 +5,10 @@ into your
 [Strider CD](https://github.com/Strider-CD/strider) server. The plugin is published under the MIT license.
 
 
+## Requirements
+This plugin uses some of the new ES6-features. One should therefore use node v4.x or above. This causes an issue on Ubuntu 14.04 LTS, which uses node 0.10.25 as it's standard-version. 
+
+
 ## Installation
 Navigate to your Strider repository and run:
 
