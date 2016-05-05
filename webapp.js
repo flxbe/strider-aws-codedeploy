@@ -7,9 +7,9 @@ module.exports = {
 
       shared: String,
 
-      credentials: {
-        awsAccessKey: String,
-        awsSecretKey: String
+      explicit: {
+        accessKeyId: String,
+        secretAccessKey: String
       },
 
       environment: String

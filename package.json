@@ -8,7 +8,8 @@
   },
   "main": "worker.js",
   "scripts": {
-    "test": "echo 'no tests specified' && exit 0"
+    "test": "echo 'no tests specified' && exit 0",
+    "inc-version": "npm --no-git-tag-version version"
   },
   "repository": {
     "type": "git",

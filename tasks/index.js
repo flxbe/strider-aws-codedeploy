@@ -89,16 +89,16 @@ function initializeAWS(config, context, callback) {
     const mode = awsCredentials.mode;
 
     // set explicit credentials, if there are any
-    if(( mode === 'explicit' || mode === 'standard' ) && awsCredentials.credentials) {
+    if(( mode === 'explicit' || mode === 'standard' ) && awsCredentials.explicit) {
       providers.push(function () {
-        return new AWS.Credentials(config.awsCredentials.credentials);
+        return new AWS.Credentials(config.awsCredentials.explicit);
       });
     }
 
     // set shared credentials profile or zero
     if(mode === 'shared' || mode === 'standard') {
       providers.push(function () {
-        return new AWS.SharedIniFileCredentials(config.awsCredentials.profile);
+        return new AWS.SharedIniFileCredentials(config.awsCredentials.shared);
       });
     }
 
