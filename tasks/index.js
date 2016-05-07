@@ -67,6 +67,18 @@ function validateConfig(config, context, callback) {
   config.artifactPath = path.join(config.buildDirectory, config.artifactName);
   config.absArtifactPath = path.join(context.dataDir, config.artifactPath);
 
+
+  const parts = config.s3Bucket.split('/');
+  config.awsBucketName = parts[0];
+  if(parts.length > 1) {
+    parts.splice(0, 1);
+    config.awsBucketPath = parts.join('/');
+  }
+  else {
+    config.awsBucketPath = '';
+  }
+  config.artifactKey = path.join(config.awsBucketPath, config.artifactName);
+
   callback();
 }
 
@@ -146,7 +158,7 @@ function deployToAWS(config, context, callback) {
 
       if(!stream) return callback('artifact not found');
 
-      var params = {Bucket: config.s3Bucket, Key: config.artifactName, Body: stream};
+      var params = {Bucket: config.awsBucketName, Key: config.artifactKey, Body: stream};
       s3.upload(params, callback);
 
     },
@@ -159,10 +171,10 @@ function deployToAWS(config, context, callback) {
         revision: {
           revisionType: 'S3',
           s3Location: {
-            bucket: config.s3Bucket,
+            bucket: config.awsBucketName,
             bundleType: 'zip',
             eTag: s3Object.ETag,
-            key: config.artifactName
+            key: config.artifactKey
             //version: 'STRING_VALUE'
           }
         },
