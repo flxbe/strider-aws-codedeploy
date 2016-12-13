@@ -9,7 +9,7 @@
   "main": "worker.js",
   "scripts": {
     "test": "echo 'no tests specified' && exit 0",
-    "inc-version": "npm --no-git-tag-version version"
+    "inc-version": "npm --no-git-tag-version version patch"
   },
   "repository": {
     "type": "git",
