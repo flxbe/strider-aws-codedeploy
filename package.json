@@ -1,6 +1,6 @@
 {
   "name": "strider-aws-codedeploy",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Deploy projects via AWS CodeDeploy",
   "author": {
     "name": "Felix Bernhardt",
