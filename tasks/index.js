@@ -187,13 +187,11 @@ function deployToAWS(config, context, callback) {
 
     // monitor deployment
     function(deployment, callback) {
-      context.log(deployment);
       monitorDeployment(context, codedeploy, deployment, callback);
     },
 
     // evaluate deployment result
     function(deployment, callback) {
-      context.log(deployment);
       if(deployment.status === 'Succeeded') callback();
       else callback(deployment.errorInformation);
     }
