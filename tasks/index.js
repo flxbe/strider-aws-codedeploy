@@ -6,6 +6,19 @@ const AWS = require('aws-sdk');
 
 
 /**
+ * Error messages
+ */
+const CONFIG_UNDEFINED = 'Config is undefined.\n\nPlease configer the strider-aws-codedeploy plugin.';
+const APPLICATION_NAME_UNDEFINED = 'Application Name is undefined.\n\nPlease specify an application name for the strider-aws-codedeploy plugin.';
+const DEPLOYMENT_GROUP_UNDEFINED = 'Deployment Group is undefined.\n\nPlease specify a deployment group for the strider-aws-codedeploy plugin.';
+const S3_BUCKET_UNDEFINED = 'S3 Bucket is undefined.\n\nPlease specify a bucket for the strider-aws-codedeploy plugin.';
+const REGION_UNDEFINED = 'AWS Region is undefined.\n\nPlease specify a region for the strider-aws-codedeploy plugin.';
+const SOURCE_PATH_UNDEFINED = 'Source Path is undefined.\n\nPlease specify a source path for the strider-aws-codedeploy plugin.';
+
+const ARTIFACT_NOT_FOUND = 'Build Artifact not found.\n\nSeems like there was a problem opening the created build package. This is most likely a bug in the plugin. Please open a new github-issue at:\nhttps://github.com/flxbe/strider-aws-codedeploy';
+
+
+/**
  * Configure the plugin-tasks.
  *
  * @param {Object} config
@@ -53,13 +66,13 @@ exports.configure = function(config) {
  * @param {Function} callback
  */
 function validateConfig(config, context, callback) {
-  if(!config) return callback('config undefined');
+  if(!config) return callback(new Error(CONFIG_UNDEFINED));
 
-  if(!config.applicationName) return callback('application-name is undefined');
-  if(!config.deploymentGroup) return callback('deployment-group is undefined');
-  if(!config.s3Bucket) return callback('s3-bucket is undefined');
-  if(!config.region) return callback('region is undefined');
-  if(!config.sourcePath) return callback('the source-path is undefined');
+  if(!config.applicationName) return callback(new Error(APPLICATION_NAME_UNDEFINED));
+  if(!config.deploymentGroup) return callback(new Error(DEPLOYMENT_GROUP_UNDEFINED));
+  if(!config.s3Bucket) return callback(new Error(S3_BUCKET_UNDEFINED));
+  if(!config.region) return callback(new Error(REGION_UNDEFINED));
+  if(!config.sourcePath) return callback(new Error(SOURCE_PATH_UNDEFINED));
 
   // fill config with computed properties
   config.buildDirectory = 'aws_build';
@@ -151,12 +164,12 @@ function deployToAWS(config, context, callback) {
 
   async.waterfall([
 
-    // load artifact to s3
+    // upload artifact to s3
     function(callback) {
 
       const stream = fs.createReadStream(config.absArtifactPath);
 
-      if(!stream) return callback('artifact not found');
+      if(!stream) return callback(ARTIFACT_NOT_FOUND);
 
       var params = {Bucket: config.awsBucketName, Key: config.artifactKey, Body: stream};
       s3.upload(params, callback);
