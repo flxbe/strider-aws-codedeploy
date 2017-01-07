@@ -90,14 +90,17 @@
         <input class="input-block-level" type="text" ng-model="config.sourcePath"
                placeholder="e.g. bin"/>
         <p class="help-text">
-            The root-directory, that includes your revision. Use <code>.</code> to include the complete directory.
+            The root-directory that includes your revision. Use <code>.</code> to include the complete directory.
         </p>
 
         <h4>Exclude List</h4>
         <input class="input-block-level" type="text" ng-model="config.excludeString"
-               placeholder="e.g. node_modules/* .git/* ..."/>
+               placeholder="e.g. node_modules/\* .git/\*"/>
         <p class="help-text">
-            Specify a space-separated list of directories and files, to exclude them from the deployment.
+            Specify a list of files and directories that should not be included in the created artifact.
+            This string will be directly passed to the <code>-x</code>/<code>--exclude</code> parameter of the <code>zip</code> command.
+            Click <a href="http://askubuntu.com/questions/371579/how-to-exclude-directories-and-file-zipping-a-directory" target="__blank">here</a>
+            for a fast explanation of the commands exclude syntax or consult <code>man zip</code>.
         </p>
 
         <h4>Build Options</h4>
